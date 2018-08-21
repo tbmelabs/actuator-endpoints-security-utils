@@ -5,4 +5,3 @@
 if [[ $TRAVIS_BRANCH == "development" && $TRAVIS_PULL_REQUEST == "false" ]] ; then
   mvn deploy -Pbuild-extras -DskipTests
 fi
-
