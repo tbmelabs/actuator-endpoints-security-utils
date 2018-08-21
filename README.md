@@ -7,7 +7,7 @@ Utilities to secure actuator endpoints.
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](https://github.com/tbmelabs/tbme-tv/tree/master#deployment) for notes on how to deploy the project on a live system.
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](https://github.com/tbmelabs/actuator-endpoints-security-utils/tree/master#deployment) for notes on how to deploy the project on a live system.
 
 ### Prerequisites
 
@@ -36,17 +36,17 @@ This project is deployed using maven. Run `mvn clean install` to install the art
 
 ## Contributing
 
-Please read [CONTRIBUTING.md](https://github.com/tbmelabs/tbme-tv/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
+Please read [CONTRIBUTING.md](https://github.com/tbmelabs/actuator-endpoints-security-utils/blob/master/CONTRIBUTING.md) for details on our code of conduct, and the process for submitting pull requests to us.
 
 ## Versioning
 
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/tbmelabs/tbme-tv/tags). 
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/tbmelabs/actuator-endpoints-security-utils/tags). 
 
 ## Authors
 
 * **Timon Borter** - *Initial work* - [bbortt](https://github.com/bbortt)
 
-See also the list of [contributors](https://github.com/tbmelabs/tbme-tv/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/tbmelabs/actuator-endpoints-security-utils/contributors) who participated in this project.
 
 ## License
 
