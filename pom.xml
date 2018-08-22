@@ -3,7 +3,9 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <groupId>ch.tbmelabs</groupId>
   <artifactId>actuator-endpoints-security-utils</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
   <packaging>jar</packaging>
 
   <name>Actuator Endpoints Security Utils</name>
@@ -33,15 +35,17 @@
     </developer>
   </developers>
 
-  <!-- https://oss.sonatype.org/content/repositories/snapshots/ch/tbmelabs/bom/ -->
-  <parent>
-    <groupId>ch.tbmelabs</groupId>
-    <artifactId>bom</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
-  </parent>
-
   <dependencyManagement>
     <dependencies>
+      <!-- https://oss.sonatype.org/content/repositories/snapshots/ch/tbmelabs/bom/ -->
+      <dependency>
+        <groupId>ch.tbmelabs</groupId>
+        <artifactId>bom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+
       <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
@@ -52,6 +56,28 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <properties>
+    <!-- General configuration -->
+    <buildNumber>${maven.build.timestamp}</buildNumber>
+    <java.version>1.8</java.version>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+    <!-- Dependency configuration -->
+    <org.mockito.mockito-core.version>2.21.0</org.mockito.mockito-core.version>
+
+    <!-- Plugin configuration -->
+    <org.apache.maven.plugins.maven-failsafe-plugin.version>2.22.0</org.apache.maven.plugins.maven-failsafe-plugin.version>
+    <org.apache.maven.plugins.maven-javadoc-plugin.version>3.0.1</org.apache.maven.plugins.maven-javadoc-plugin.version>
+    <org.apache.maven.plugins.maven-gpg-plugin.version>1.6</org.apache.maven.plugins.maven-gpg-plugin.version>
+    <org.apache.maven.plugins.maven-source-plugin.version>3.0.1</org.apache.maven.plugins.maven-source-plugin.version>
+    <org.apache.maven.plugins.maven-surefire-plugin.version>2.22.0</org.apache.maven.plugins.maven-surefire-plugin.version>
+    <org.codehaus.mojo.versions-maven-plugin.version>2.5</org.codehaus.mojo.versions-maven-plugin.version>
+    <org.sonatype.plugins.nexus-staging-maven-plugin.version>1.6.8</org.sonatype.plugins.nexus-staging-maven-plugin.version>
+  </properties>
 
   <dependencies>
     <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-security -->
@@ -64,7 +90,6 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>${org.projectlombok.lombok.version}</version>
       <scope>provided</scope>
     </dependency>
 
@@ -72,7 +97,6 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
-      <version>${spring.version}</version>
       <scope>test</scope>
     </dependency>
 
@@ -89,10 +113,167 @@
     <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-test</artifactId>
-      <version>${spring.security.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <defaultGoal>clean install</defaultGoal>
+    <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+
+    <plugins>
+      <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/versions-maven-plugin -->
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>versions-maven-plugin</artifactId>
+        <version>${org.codehaus.mojo.versions-maven-plugin.version}</version>
+      </plugin>
+
+      <!-- https://mvnrepository.com/artifact/org.sonatype.plugins/nexus-staging-maven-plugin -->
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>${org.sonatype.plugins.nexus-staging-maven-plugin.version}</version>
+
+        <extensions>true</extensions>
+
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+
+      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>${org.apache.maven.plugins.maven-surefire-plugin.version}</version>
+
+        <executions>
+          <execution>
+            <id>unit-tests</id>
+
+            <phase>test</phase>
+
+            <goals>
+              <goal>test</goal>
+            </goals>
+
+            <configuration>
+              <includes>
+                <include>**/*Test.java</include>
+              </includes>
+
+              <excludes>
+                <exclude>**/*IntTest.java</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
+      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-failsafe-plugin</artifactId>
+        <version>${org.apache.maven.plugins.maven-failsafe-plugin.version}</version>
+
+        <executions>
+          <execution>
+            <id>integration-tests</id>
+
+            <phase>integration-test</phase>
+
+            <goals>
+              <goal>integration-test</goal>
+            </goals>
+
+            <configuration>
+              <includes>
+                <include>**/*IntTest.java</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>sign</id>
+
+      <build>
+        <plugins>
+          <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-gpg-plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>${org.apache.maven.plugins.maven-gpg-plugin.version}</version>
+
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+
+                <phase>verify</phase>
+
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>build-extras</id>
+
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+
+      <build>
+        <plugins>
+          <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-source-plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>${org.apache.maven.plugins.maven-source-plugin.version}</version>
+
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+
+                <goals>
+                  <goal>jar-no-fork</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+
+          <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>${org.apache.maven.plugins.maven-javadoc-plugin.version}</version>
+
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 
   <repositories>
     <repository>
