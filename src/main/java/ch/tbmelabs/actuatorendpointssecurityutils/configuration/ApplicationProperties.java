@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.actuatorendpointssecurityutils.configuration;
+package ch.tbmelabs.actuatorendpointssecurityutils.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

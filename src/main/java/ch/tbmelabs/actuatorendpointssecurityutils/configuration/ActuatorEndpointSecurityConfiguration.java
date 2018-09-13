@@ -1,4 +1,4 @@
-package ch.tbmelabs.tv.actuatorendpointssecurityutils.configuration;
+package ch.tbmelabs.actuatorendpointssecurityutils.configuration;
 
 import javax.annotation.PostConstruct;
 import org.springframework.context.annotation.Configuration;
