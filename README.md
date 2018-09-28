@@ -3,7 +3,7 @@
 Utilities to secure actuator endpoints.
 
 [![Build Status](https://travis-ci.org/tbmelabs/actuator-endpoints-security-utils.svg?branch=master)](https://travis-ci.org/tbmelabs/actuator-endpoints-security-utils)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/d9eae98d8d1d4915b8f56ab8e7ce8d7b)](https://www.codacy.com/app/bbortt_2/actuator-endpoints-security-utils?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=tbmelabs/actuator-endpoints-security-utils&amp;utm_campaign=Badge_Grade)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=actuator-endpoints-security-utils&metric=alert_status)](https://sonarcloud.io/dashboard?id=actuator-endpoints-security-utils)
 
 ## Getting Started
 

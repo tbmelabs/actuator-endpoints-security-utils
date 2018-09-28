@@ -41,6 +41,12 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
+    <properties>
+        <!-- Sonar configuration -->
+        <sonar.projectKey>actuator-endpoints-security-utils</sonar.projectKey>
+        <sonar.projectName>Actuator-Endpoints-Security-Utils</sonar.projectName>
+    </properties>
+
     <dependencies>
         <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-security -->
         <dependency>
