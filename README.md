@@ -15,7 +15,8 @@ Make sure to install the following software before starting:
 
 * [Java Development Kit 11](https://www.oracle.com/technetwork/java/javase/downloads/jdk11-downloads-5066655.html)
 * [Maven](https://maven.apache.org/download.cgi)
-* [Project Lombok](https://projectlombok.org/)
+
+And your IDE should support [Lombok](https://projectlombok.org/).
 
 ### Installing
 
