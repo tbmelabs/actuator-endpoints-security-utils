@@ -1,245 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>ch.tbmelabs</groupId>
-  <artifactId>actuator-endpoints-security-utils</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>actuator-endpoints-security-utils</artifactId>
+    <version>1.0.0</version>
+    <packaging>jar</packaging>
 
-  <name>Actuator Endpoints Security Utils</name>
-  <description>Utilities to secure actuator endpoints.</description>
+    <name>Actuator Endpoints Security Utils</name>
+    <description>Utilities to secure actuator endpoints.</description>
+    <url>https://github.com/tbmelabs/actuator-endpoints-security-utils</url>
 
-  <properties>
-    <!-- General configuration -->
-    <buildNumber>${maven.build.timestamp}</buildNumber>
-    <java.version>1.8</java.version>
-    <maven.compiler.source>1.8</maven.compiler.source>
-    <maven.compiler.target>1.8</maven.compiler.target>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
 
-    <!-- Dependency configuration -->
-    <org.mockito.mockito-core.version>2.9.0</org.mockito.mockito-core.version>
+    <scm>
+        <url>https://github.com/tbmelabs/actuator-endpoints-security-utils</url>
+        <connection>scm:git:git://github.com/tbmelabs/actuator-endpoints-security-utils.git</connection>
+        <developerConnection>scm:git:git@github.com:tbmelabs/actuator-endpoints-security-utils.git</developerConnection>
+    </scm>
 
-    <!-- Plugin configuration -->
-    <com.spotify.docker-maven-plugin.version>1.1.1</com.spotify.docker-maven-plugin.version>
-    <org.jacoco.jacoco-maven-plugin.version>0.8.1</org.jacoco.jacoco-maven-plugin.version>
+    <developers>
+        <developer>
+            <name>TBME Labs</name>
+            <email>info@tbmelabs.ch</email>
+            <organization>TBME Labs</organization>
+            <organizationUrl>tbmelabs.ch</organizationUrl>
+        </developer>
+    </developers>
 
-    <!-- Test coverage configuration -->
-    <project.build.test-result-directory>${project.build.directory}/test-results</project.build.test-result-directory>
+    <parent>
+        <!-- https://oss.sonatype.org/service/local/repositories/releases/content/ch/tbmelabs/parent/ -->
+        <groupId>ch.tbmelabs</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
 
-    <org.jacoco.jacoco-maven-plugin.dest-file-path>${project.build.test-result-directory}/coverage/jacoco/jacoco.exec</org.jacoco.jacoco-maven-plugin.dest-file-path>
-    <org.jacoco.jacoco-maven-plugin.output-path>${project.build.test-result-directory}/coverage/jacoco</org.jacoco.jacoco-maven-plugin.output-path>
+    <properties>
+        <!-- Sonar configuration -->
+        <sonar.projectKey>actuator-endpoints-security-utils</sonar.projectKey>
+        <sonar.projectName>Actuator-Endpoints-Security-Utils</sonar.projectName>
+    </properties>
 
-    <!-- Sonar configuration -->
-    <sonar.java.codeCoveragePlugin>jacoco</sonar.java.codeCoveragePlugin>
-    <sonar.issue.ignore.multicriteria>S2068a,S2068b</sonar.issue.ignore.multicriteria>
-    <sonar.issue.ignore.multicriteria.S2068a.ruleKey>squid:S2068</sonar.issue.ignore.multicriteria.S2068a.ruleKey>
-    <sonar.issue.ignore.multicriteria.S2068a.resourceKey>**/UserSignupService.java</sonar.issue.ignore.multicriteria.S2068a.resourceKey>
-    <sonar.issue.ignore.multicriteria.S2068b.ruleKey>squid:S2068</sonar.issue.ignore.multicriteria.S2068b.ruleKey>
-    <sonar.issue.ignore.multicriteria.S2068b.resourceKey>**/ClientGrantType.java</sonar.issue.ignore.multicriteria.S2068b.resourceKey>
-
-    <!-- Sonar report paths for sonar-server >= 6.2 -->
-    <sonar.jacoco.reportPaths>${project.build.test-result-directory}/coverage/jacoco/jacoco.exec</sonar.jacoco.reportPaths>
-    <sonar.javascript.lcov.reportPaths>${project.build.test-result-directory}/coverage/report-lcov/lcov.info</sonar.javascript.lcov.reportPaths>
-
-    <!-- Sonar report paths for sonar-server < 6.2 -->
-    <sonar.jacoco.reportPath>${sonar.jacoco.reportPaths}</sonar.jacoco.reportPath>
-    <sonar.javascript.lcov.reportPath>${sonar.javascript.lcov.reportPaths}</sonar.javascript.lcov.reportPath>
-  </properties>
-
-  <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-parent -->
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.0.3.RELEASE</version>
-  </parent>
-
-  <dependencyManagement>
     <dependencies>
-      <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-dependencies -->
-      <dependency>
-        <groupId>org.springframework.cloud</groupId>
-        <artifactId>spring-cloud-dependencies</artifactId>
-        <version>Finchley.RELEASE</version>
-        <type>pom</type>
-        <scope>import</scope>
-      </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-security -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-security</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
     </dependencies>
-  </dependencyManagement>
 
-  <dependencies>
-    <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-security -->
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-security</artifactId>
-    </dependency>
+    <repositories>
+        <repository>
+            <id>ossrh-snapshot</id>
+            <name>Sonatype Snapshot Repository</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
 
-    <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <scope>provided</scope>
-    </dependency>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
 
-    <!-- https://mvnrepository.com/artifact/ch.tbmelabs/actuator-endpoints-security-utils -->
-    <dependency>
-      <groupId>ch.tbmelabs.tv.shared</groupId>
-      <artifactId>constants</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
-    </dependency>
+        <repository>
+            <id>ossrh</id>
+            <name>Sonatype Release Repository</name>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 
-    <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-test -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-    <dependency>
-      <groupId>org.mockito</groupId>
-      <artifactId>mockito-core</artifactId>
-      <!-- Do not remove this! Mockito < 2.0 is required. -->
-      <version>${org.mockito.mockito-core.version}</version>
-      <scope>test</scope>
-    </dependency>
-
-    <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
-    <dependency>
-      <groupId>org.springframework.security</groupId>
-      <artifactId>spring-security-test</artifactId>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <defaultGoal>clean install</defaultGoal>
-    <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
-
-    <plugins>
-      <!-- https://mvnrepository.com/artifact/org.codehaus.mojo/versions-maven-plugin -->
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>versions-maven-plugin</artifactId>
-      </plugin>
-
-      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-surefire-plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-
-        <executions>
-          <execution>
-            <id>unit-tests</id>
-
-            <phase>test</phase>
-
-            <goals>
-              <goal>test</goal>
-            </goals>
-
-            <configuration>
-              <includes>
-                <include>**/*Test.java</include>
-              </includes>
-
-              <excludes>
-                <exclude>**/*IntTest.java</exclude>
-              </excludes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-failsafe-plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-failsafe-plugin</artifactId>
-
-        <executions>
-          <execution>
-            <id>integration-tests</id>
-
-            <phase>integration-test</phase>
-
-            <goals>
-              <goal>integration-test</goal>
-            </goals>
-
-            <configuration>
-              <includes>
-                <include>**/*IntTest.java</include>
-              </includes>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-
-      <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin -->
-      <plugin>
-        <groupId>org.jacoco</groupId>
-        <artifactId>jacoco-maven-plugin</artifactId>
-        <version>${org.jacoco.jacoco-maven-plugin.version}</version>
-
-        <executions>
-          <!-- download and install JaCoCo agent -->
-          <execution>
-            <id>prepare-agent</id>
-
-            <goals>
-              <goal>prepare-agent</goal>
-            </goals>
-
-            <configuration>
-              <destFile>${org.jacoco.jacoco-maven-plugin.dest-file-path}</destFile>
-            </configuration>
-          </execution>
-
-          <!-- report test coverage -->
-          <execution>
-            <id>post-unit-test</id>
-            <phase>test</phase>
-
-            <goals>
-              <goal>report</goal>
-            </goals>
-
-            <configuration>
-              <dataFile>${org.jacoco.jacoco-maven-plugin.dest-file-path}</dataFile>
-              <outputDirectory>${org.jacoco.jacoco-maven-plugin.output-path}</outputDirectory>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
-  <reporting>
-    <plugins>
-      <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-javadoc-plugin -->
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <configuration>
-          <show>public</show>
-          <nohelp>true</nohelp>
-        </configuration>
-      </plugin>
-    </plugins>
-  </reporting>
-
-  <distributionManagement>
-    <snapshotRepository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-    </snapshotRepository>
-
-    <repository>
-      <id>ossrh</id>
-      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>
-  </distributionManagement>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

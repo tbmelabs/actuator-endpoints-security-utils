@@ -1,7 +1,7 @@
 language: java
 dist: trusty
 jdk:
-  - oraclejdk8
+  - openjdk11
 
 sudo: false
 install: true
@@ -15,18 +15,46 @@ branches:
   - development
 
 deploy:
-  provider: script
-  script: "cp .travis.settings.xml $HOME/.m2/settings.xml && ./scripts/deploy.sh"
-  skip_cleanup: true
+  - provider: script
+    script: bash scripts/deploy.sh
+    on:
+      branch: master
+  - provider: script
+    script: bash scripts/deploy-snapshot.sh
+    on:
+      branch: development
+
+env:
+  global:
+    - secure: "TEyI0SoELU4pwsBqys05S0xwaqB+MiToAcZFBak5+TgLGu/hfkfRmV/+EQvSwu/adztsiNOkSve+l3jhvbz7b3uXeGg+qI8Xn5sMgUfxy6dVsEMSbQXInnyplVcZAe4gmFoOhizp4wfyhX0E/DLCDgdldH1oU14HgS2qAkeONNHcuo+uekDw907VPjqnGPv4PWgupMDtFnX2gD+DuZMYrlrcoESAcGC0SNJqmuRgiqoHzNeAvRCtPbOK2KpeHOxLPzwoOotlBtPBcRBUvV0IK76ZfwKXVA2/awY25AL6y0WFROgSr8pZfCn4Z2JxnJ6qh2uI//DxJOnuyXlJSGRXoiRd5Dd15d0AjekTxC7A2v08I0U90m26+w8o1WH/AxpQux1reQi+sqHhWT9FS+PaZUxKZR14max5eTu14KeHs/3sTbazCbxA7xREt0dAKtlRQGf2yUT/LcwPxDQYo9oADMnCWDhixH7OmyqHeFQoRGtrldQywbHk4y3iIAf87XC/rGGkIwF1lnwRymA+7nU8RGEDN1OpzEsJPkbYLrDofzTJC7Jlr4BjIXqx8iucR1W37333XGAJcjY44Zvp0I4hrvxehR1iU43x6dE/z+HlnDTi2ig4pLJvtDA8VZHhczR8EHkr+75OfpcwFiqK/T94QH8u7RPw6cmfJG7D1AbWQfY="
+    # ^^ GITHUB_USERNAME
+    - secure: "bT82ylO8fBoc24JkKC0ua0yglW0JOb60hKIb3vLC0VA+/MHKUXJZL/EpH9bytv5qnZ62deH7ecgVAZyfmYpYY84T4hPQQyLTX8rmiDAZEIv90sDwmB6rqbZzwySf7FHMbINdkqw5II2982+X2qlhy3nGwcgRzvnDxFZe62NT8BHcWltTQ47cZmb7YEOPm02RLwBkz3xTHLopwjRYbV24IStGtj17y6Juu30bEs7pEIKI32/C4U+0/Cs+8/RrcKPcKpwpUk+hR4W4H6rBZaMXmrkDH2iU4m8oI1iLFo+ehalK2hqjCZp5ODI5cTnXO2FgymGD1fI4mq7tF0qZAFkyb3loVbj3IWYX6uJs2g4aVSOCGdbTrttUiEYF4Yy+rSi0Ox3ojhTHFBNJYfusf66h9r3fad+zqRuzrqAKsUrqN3VohVJ23HuJ1Brgn3jeIOsVk24QGius+errbWT71VJr7i22HWhLH3p6Xz/wNVLhBMD0yXkqV/D2OC+qVk4xYuyFknJs9l2x84La7nyXp1Xai8j7BsYqsI1s463yV3OuRGob9uw+1DtBTpfH0sT7Mki2KiJDQDeFBqpzZJ5W7Q1iK8RUB7+MH3drbiA+xS7JEw1gbi8K6+4oPD6DLeAFGuBveXMsvT8hCJsarBrLbkzErPyaoFie9+Z4g+PyiTcfu28="
+    # ^^ GITHUB_ACCESS_TOKEN
+    - secure: "Js4NkaZC9qeIwpBMUH/FQyfsehk05hhmzpElGTayeuL6FCfGRmX/JtaQ2dl9QfVjZRnOZw2w6HQO2lJ9ltNgelSl4NMlVVz5StyVHspELZ5WO/oNtXXz4qLMAEUGGFfOmy9owjNdH4IPj5Nduh7/fv1wMvogU/tUVsO+nNKaTZqoK66UrmQCSXndZXflD1qbkEAbUiVF4f3N+otJAtlNXFoSRpvNgX00dl6afzTtALzartz0g6HsQ+tfzSarl76ERTJCb/1+5hgE8GT+nIghYv7UNV/e+uAwoDi7EcvctLLT5P8qiJ2FIMviki09dH/aY//cv2ZmJVH5vAWPgk4FZJItSuyhZGuhlb0B6lGU7aGnTU/Or9ALYIlBfn48p21k2j/p/e4w1GCEI/sjAqBBsXhlJxFECJ2tOaXZ/xmAYKr9toJlHm9DUGJagaJYrRV9vYPkLer+NSxSOoKk/rUEArJd/N5fV5mmYXMvm5xLIXNKM9S+qyylcnVR6qGI8HSIwnAlssijMwgMKs91QRClhKNYna/dZLCPfMF9h/8tUzvcrFwqDZDTdsU/2LVY57AcWUGdaVLqQ8dyMZgOtpyfZDfUwe9iXezZrNNzDtF4qkEK/4L2slDLRKFWzHLYW0A+8EssTJTX0Kdaj/GybOQWDtbIpT4ktRQGa0MESl3x7+o="
+    # ^^ OSSRH_JIRA_USERNAME
+    - secure: "rNiRZlLR0g9pArSVEqXDUYjBfwvEl4G9pYpp+xcqSNwiAiCbAD+gbcy2ZjZilOMH2e/YQTSefSTGagwh0DfsZ++7zVlUBWdGy3dULpJnwWH8GhM7HC9/cAj1Q2jxf4IZaZZN8WfPkEgxMRJPjDniLwmiECZ1F3WfGd2IwIXtmUE6OOphEy5hfc9C6Z1xcwzPrFd30Dn5zl+GmIN/WL0P/DsPZJGHZE0Cdn+9jm48TxHbhaNN6WkF/Er/ge1aSBAYWJH3KInRrVkHve2GJhq7XgqiAkkDvFg+lqaol0hWDCbZ7nPioXGELh5uOzZc2oQvuCymWXInJX1Fr05/xz5g5Vo9L+cJv0X2ESSbvG+g6ybsrVpkNcCfEazmrBHNZwdclmFxhK+XpzHKjEMrirLXDjXPiky6JPDQVKNOJa4AlXvc4uEamc9zYSwXXQJbVK4MTUxeLZy1Pwq0+s7v+yA0qU2NDaGzDOtCHbYyWaVinxLRAQSzbnM8Z3pR2Ki0zH1Pjpw8Kc+w0WH+rpYfFTHEoYkDCvFJAf9CeQ0NnGhTdccNp9nAPix3YfqlPlQsZpHVuvyxmqSpch5NxAfVTg5Z10bVuIHpgdyCLG/sTNrjVSLdEMRomAm7klSnkitD2uKUC6SiiTGVGTJpCOTHPuu9dRcPi49HSeMt69cmqGIrcsk="
+    # ^^ OSSRH_JIRA_PASSWORD
+    - secure: "jptT/Uwxas56Inkk9OgJYDqXuvZyqVxFteBitRLYuD0MWrhkvs3oM84jHHEHfN7UjMkiIHnfCAQogmxTaJRGk30PND3IgWs68WibvrdFYTYVyoKvYkYaX+ztt3f4E4pzZHV0Xj+mzLD1Bv67vNViJlhMHRTzD4MAzGj1kGsBT85NIBF5bk6IQGM76B8CmXTcerz91Uwp6R2fxmnBqbYDGxCudTWVWfCyiyH3ApQt7VE/FItHR1FrPQeuBYMyv+ulTXXJdptt4QOA+le4fOGCPtd7NUCPyqpONouQWWG4AQcsRnceSCr/tsHtHtPyANKyS6t2dMHKsvMVDpxfh/64ykKlZNHLGsx1C1aONbuU01fX4E2jKcu/X0eBYLBck+fM6L/7815z+8ZSo/b3u4Ly/shbCfDODE+Q1Kq055UCG0ze3SYwy5fMcNwW0TGtjHJam8MkgN8pV8prLONjfmIZbRimQGx/sIirPAd6VQ6D2RJAz4Fs+bj3SYpC1HpImpzFBa/ScRVRwdKyInjWzEzCT/L3yii08agiSKpmAFsTLuUzMj+hc0aaHuueYOuZ7xNLPxtWxqo1v0JF802l7YitmsFuWDhxIN/3GtVpaIlN5ypoXmG1Wp1G1aA5lS/Vnq+cM1rHKotEB9b47el7DmPEG2daERjQcLyHpALhGDaa75w="
+    # ^^ GPG_KEY_NAME
+    - secure: "BQTqIdesk0ZadjsRTNdo8X7zShacu63kFJV85lkOmEeT1SUVNWog4rE5NngGEmYGKFlN4ijznm01wNBMJ6ynBMDeSFmX4wnQeTcwzEVwBz+GZcJlkRoANRiyZTRnv7L1zmt8+tqhdh7p/nO8HVHlgxLg4WVTXGxaZsfasN8tGEz8kE3JdhkSt4ibIYx6Qjmxlr6XaMS1mVRp6GxQbQIi/QoQdhxce477qmr2aduGI4tkywAAkuad5nez4EVmkI/4y78otZU7n1s1RPDdBQrteBGG3dzlyBY9iW90O43d8cZShjhe1zWtjFgTE3mgBerM82jFu2e8VToqNb0PDIdleIq+G40icLUkcMJ9gD0KuxOWUpnBOx8/GE37/HqaQR5TwarsweO2RhFVssTCO62X9bR+UWYhDCwQuTM3lvqfccJ1Uzo9u5fb35zgAUK02y/vwutZ8zwn/apmihf8lK2BQo7LXJtPKuYB3HtL8xqFufEQ3EiYLWjPPWr3LnqYitmchH2Fr7QDM4KroMPYzMvCC5Ojk0jZBpvB7zX/e42c/YP20GUCJNFLeZyeKKUR7RsoqORacHvUdIMW5lKs20Bqb4Cq5bdDmnaWtfZHtjn+0Ee80CcXPs0G7boXyuErT0NW84ov8qJ+/Uo5tfG4Mf5LdfS82O4h9QsbzVAmVBud9Dg="
+    # ^^ GPG_PASSPHRASE
 
 addons:
   sonarcloud:
     organization: "tbmelabs-github"
     token:
-      secure: ${SONAR_TOKEN}
+      secure: "NdshEorZ2t9nLEBgeeWGIbswBlvTDEclOoLK4Kkyt6SX5yXVxVEWowd0FjKXHbOR8Vgi8uDbSaxyGF+vmTWNHtYALlXSlDP+27RIRmiIbYMF7N3e0MsZb28Q7HpbpvSR8Ir8ts+/38x3AkwbwypFKYdc0pRa06WisbLk8dZxgrgfrLPgaYwPcMhMEfXy1PWhkPALhwU6DwtFX7HbWuHlDZ8Bx/ZraY2tQiDoQqWhi2jluGZfu9AQiPCpGZmCufNwkdR5rJSU6N/H2ueZxlS1RM7neO4FtxnHUZwThlG7vxcshOsMOCTRRrgYgmK15OG5OnHb+fss6nPkpv+8OZAnjLTaXRzCE6zN5dhftAM//m07oLEotPNBtD9DvLK8kuCvaJavn2U4E4+4S4PPb80HJKJk2DxUsUUdj6I1yyuHZoYqG1fevSufKfWZHPnxpjkiRzAYn7NXvgwXlt6bGvm6YvYu75w3EOuazb0EKPC++8l2EW6DFoEOMGkz7KjfF6WIrdThtBw7V4K48+ebTmB1vJDHKXNWd2oD5Pg3buxwDloLhzNP4oGEMDrWwYAm+itqgHHd8mQhGnL/CwnW3IXeFlezXFZDwZn5Ybz+pAvJ4Z22jXYlc6sQ3W3lVxqtEAu9rDw+EkR2y2SOLeRqmm6T6aJf+LloPzzM5QbNFMXtFYQ="
+
+before_script:
+  - git clone https://${GITHUB_USERNAME}:${GITHUB_ACCESS_TOKEN}@github.com/mirioeggmann/tbmelabs-deploy-certificates.git
+  - gpg --fast-import tbmelabs-deploy-certificates/tbmelabs-deploy-key.asc
+  - cp .travis.settings.xml $HOME/.m2/settings.xml
 
 script:
   - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar
+
+after_script:
+  - rm -rf tbmelabs-deploy-certificates
 
 cache:
   directories:
