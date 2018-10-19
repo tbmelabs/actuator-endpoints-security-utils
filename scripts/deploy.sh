@@ -3,5 +3,6 @@
 # https://github.com/tbmelabs/actuator-endpoints-security-utils
 
 if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == "false" ]] ; then
-  mvn clean versions:set deploy -Psign,build-extras -DremoveSnapshot -DskipTests
+  mvn deploy -Psign,build-extras -DskipTests
 fi
+
