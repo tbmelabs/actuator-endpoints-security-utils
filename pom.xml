@@ -34,8 +34,8 @@
         </developer>
     </developers>
 
+    <!-- https://oss.sonatype.org/service/local/repositories/releases/content/ch/tbmelabs/parent/ -->
     <parent>
-        <!-- https://oss.sonatype.org/service/local/repositories/releases/content/ch/tbmelabs/parent/ -->
         <groupId>ch.tbmelabs</groupId>
         <artifactId>parent</artifactId>
         <version>1.0.0</version>
