@@ -38,7 +38,8 @@
     <parent>
         <groupId>ch.tbmelabs</groupId>
         <artifactId>parent</artifactId>
-        <version>1.0.1</version>
+        <version>1.0.2-SNAPSHOT</version>
+        <relativePath /> <!-- lookup parent from repository -->
     </parent>
 
     <properties>
@@ -91,16 +92,6 @@
             <releases>
                 <enabled>false</enabled>
             </releases>
-        </repository>
-
-        <repository>
-            <id>ossrh</id>
-            <name>Sonatype Release Repository</name>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
         </repository>
     </repositories>
 </project>
